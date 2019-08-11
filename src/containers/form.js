@@ -58,7 +58,7 @@ function Form () {
     text += `*翌営業日の予定*\n\n${message.schedule}\n\n`;
 
     const url = window.localStorage.getItem('webhook');
-    if (!url.match(/^http/g)) {
+    if (url === null || !url.match(/^http/g)) {
       alert('Webhook URLを指定してください')
       return
     }
