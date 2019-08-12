@@ -2,60 +2,49 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios'
 
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles(theme => ({
-  formInnerContainer: {
-    padding: theme.spacing(3, 2),
-  },
-  formTypography: {
-    marginTop: 20
+import InputCard from '../components/form/InputCard'
+
+const useStyles = makeStyles({
+  mt20: {
+    marginTop: 20,
   },
   formButton: {
-    marginTop: 20,
     justifyContent: 'center'
   }
-}));
+});
 
 function Form () {
-  const [message, setMessage] = useState({
-    done: '',
-    comment: '',
-    schedule: ''
-  });
+  const [done, setDone] = useState('');
+  const [comment, setComment] = useState('');
+  const [todo, setTodo] = useState('');
 
-  const messageChanger = (done, comment, schedule) => {
-    setMessage({
-      done: done,
-      comment: comment,
-      schedule: schedule
-    });
-  }
+  const doneChanger = (newDone) => { setDone(newDone) }
+  const commentChanger = (newComment) => { setComment(newComment) }
+  const todoChanger = (newTodo) => { setTodo(newTodo) }
 
   const messageSender = () => {
     var text = '';
 
-    if (message.done === '') {
+    if (done === '') {
       alert('今日やったことが入力されていません')
       return
     }
-    text += `*今日やったこと*\n\n${message.done}\n\n`;
+    text += `*今日やったこと*\n\n${done}\n\n`;
 
-    if (message.comment === '') {
+    if (comment === '') {
       alert('コメントが入力されていません')
       return
     }
-    text += `*コメント*\n\n${message.comment}\n\n`;
+    text += `*コメント*\n\n${comment}\n\n`;
 
-    if (message.schedule === '') {
+    if (todo === '') {
       alert('翌営業日の予定が入力されていません')
       return
     }
-    text += `*翌営業日の予定*\n\n${message.schedule}\n\n`;
+    text += `*翌営業日の予定*\n\n${todo}\n\n`;
 
     const url = window.localStorage.getItem('webhook');
     if (url === null || !url.match(/^http/g)) {
@@ -70,64 +59,48 @@ function Form () {
       }, {
         headers: { 'content-type': 'application/x-www-form-urlencoded' }
       })
-      .then(alert('投稿しました'))
+      .then(() => {
+        alert('投稿しました')
+        setDone('')
+        setComment('')
+        setTodo('')
+      })
       .catch(e => alert(e))
   }
 
   const classes = useStyles();
 
   return (
-    <Paper className={classes.formInnerContainer}>
-      <Typography
-        variant="h5"
-        component="h5"
-      >今日やったこと</Typography>
-      <TextField
+    <div>
+      <InputCard
+        title="今日やったこと"
         placeholder="今日やったことを箇条書きします"
-        multiline={true}
-        fullWidth={true}
-        rows={1}
-        rowsMax={8}
-        value={message.done}
-        onChange={event => messageChanger(event.target.value, message.comment, message.schedule)}
+        value={done}
+        onChange={doneChanger}
       />
-      <Typography
-        variant="h5"
-        component="h5"
-        className={classes.formTypography}
-      >コメント</Typography>
-      <TextField
+      <div className={ classes.mt20 }></div>
+      <InputCard
+        title="コメント"
         placeholder="今日やったことに対してコメントを書きます"
-        multiline={true}
-        fullWidth={true}
-        rows={1}
-        rowsMax={8}
-        value={message.comment}
-        onChange={event => messageChanger(message.done, event.target.value, message.schedule)}
+        value={comment}
+        onChange={commentChanger}
       />
-      <Typography
-        variant="h5"
-        component="h5"
-        className={classes.formTypography}
-      >翌営業日の予定</Typography>
-      <TextField
+      <div className={ classes.mt20 }></div>
+      <InputCard
+        title="翌営業日の予定"
         placeholder="翌営業日の予定を箇条書きします"
-        multiline={true}
-        fullWidth={true}
-        rows={1}
-        rowsMax={8}
-        value={message.schedule}
-        onChange={event => messageChanger(message.done, message.comment, event.target.value)}
+        value={todo}
+        onChange={todoChanger}
       />
       <Grid container direction="row" justify="center" alignItems="center">
         <Button
           variant="contained"
           color="primary"
-          className={classes.formButton}
+          className={[classes.formButton, classes.mt20]}
           onClick={messageSender}
         >送信</Button>
       </Grid>
-    </Paper>
+    </div>
   );
 }
 
