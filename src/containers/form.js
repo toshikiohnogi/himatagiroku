@@ -26,30 +26,40 @@ function Form () {
   const todoChanger = (newTodo) => { setTodo(newTodo) }
 
   const messageSender = () => {
+    var today = new Date();
     var text = '';
 
+    var lastCommit = window.localStorage.getItem('last_commit');
+    if (
+      lastCommit != null &&
+      lastCommit === today.toLocaleDateString()
+    ) {
+      alert('日跨ぎ録の投稿は1日1回までです');
+      return;
+    }
+
     if (done === '') {
-      alert('今日やったことが入力されていません')
-      return
+      alert('今日やったことが入力されていません');
+      return;
     }
     text += `*今日やったこと*\n\n${done}\n\n`;
 
     if (comment === '') {
-      alert('コメントが入力されていません')
-      return
+      alert('コメントが入力されていません');
+      return;
     }
     text += `*コメント*\n\n${comment}\n\n`;
 
     if (todo === '') {
-      alert('翌営業日の予定が入力されていません')
-      return
+      alert('翌営業日の予定が入力されていません');
+      return;
     }
     text += `*翌営業日の予定*\n\n${todo}\n\n`;
 
     const url = window.localStorage.getItem('webhook');
     if (url === null || !url.match(/^http/g)) {
-      alert('Webhook URLを指定してください')
-      return
+      alert('Webhook URLを指定してください');
+      return;
     }
     
     axios
@@ -59,10 +69,13 @@ function Form () {
         headers: { 'content-type': 'application/x-www-form-urlencoded' }
       })
       .then(() => {
-        alert('投稿しました')
-        setDone('')
-        setComment('')
-        setTodo('')
+        window.localStorage.setItem('last_commit', today.toLocaleDateString());
+
+        alert('投稿しました');
+
+        setDone('');
+        setComment('');
+        setTodo('');
       })
       .catch(e => alert(e))
   }
@@ -95,7 +108,7 @@ function Form () {
         <Button
           variant="contained"
           color="primary"
-          className={[classes.formButton, classes.mt20]}
+          className={classes.formButton + ' ' + classes.mt20}
           onClick={messageSender}
         >送信</Button>
       </Grid>
