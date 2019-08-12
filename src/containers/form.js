@@ -54,8 +54,7 @@ function Form () {
     
     axios
       .post(url, {
-        text: text,
-        username: '日跨ぎ録筆者'
+        text: text
       }, {
         headers: { 'content-type': 'application/x-www-form-urlencoded' }
       })
