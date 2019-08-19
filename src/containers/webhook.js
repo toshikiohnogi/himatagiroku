@@ -24,7 +24,15 @@ const useStyles = makeStyles(theme => ({
 const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
 function Webhook () {
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState(() => {
+    let urlOnLocalStorage = window.localStorage.getItem('webhook');
+
+    if (urlOnLocalStorage === null) {
+      return '';
+    }
+
+    return urlOnLocalStorage;
+  });
 
   const submitWebhookUrl = () => {
     window.localStorage.setItem('webhook', url);
