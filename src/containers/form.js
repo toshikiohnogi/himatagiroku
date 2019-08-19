@@ -16,14 +16,33 @@ const useStyles = makeStyles({
   }
 });
 
-function Form () {
-  const [done, setDone] = useState('');
-  const [comment, setComment] = useState('');
-  const [todo, setTodo] = useState('');
+function getInitialContent (key) {
+  let doneOnSession = window.sessionStorage.getItem(key);
+  
+  if (doneOnSession === null) {
+    return '';
+  }
 
-  const doneChanger = (newDone) => { setDone(newDone) }
-  const commentChanger = (newComment) => { setComment(newComment) }
-  const todoChanger = (newTodo) => { setTodo(newTodo) }
+  return doneOnSession;
+}
+
+function Form () {
+  const [done, setDone] = useState(getInitialContent('done'));
+  const [comment, setComment] = useState(getInitialContent('comment'));
+  const [todo, setTodo] = useState(getInitialContent('todo'));
+
+  const doneChanger = (newDone) => {
+    setDone(newDone);
+    window.sessionStorage.setItem('done', newDone);
+  }
+  const commentChanger = (newComment) => {
+    setComment(newComment);
+    window.sessionStorage.setItem('comment', newComment);
+  }
+  const todoChanger = (newTodo) => {
+    setTodo(newTodo);
+    window.sessionStorage.setItem('todo', newTodo);
+  }
 
   const messageSender = () => {
     var today = new Date();
@@ -70,12 +89,12 @@ function Form () {
       })
       .then(() => {
         window.localStorage.setItem('last_commit', today.toLocaleDateString());
-
         alert('投稿しました');
 
         setDone('');
         setComment('');
         setTodo('');
+        window.sessionStorage.clear();
       })
       .catch(e => alert(e))
   }
