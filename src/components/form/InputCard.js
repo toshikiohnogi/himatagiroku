@@ -15,23 +15,21 @@ function InputCard (props) {
   const classes = useStyles();
   
   return (
-    <div>
-      <Paper className={classes.innerPaper}>
-        <Typography
-          variant="h5"
-          component="h5"
-        >{ props.title }</Typography>
-        <TextField
-          placeholder={ props.placeholder }
-          multiline={true}
-          fullWidth={true}
-          rows={1}
-          rowsMax={8}
-          value={props.value}
-          onChange={event => props.onChange(event.target.value)}
-        />
-      </Paper>
-    </div>
+    <Paper className={classes.innerPaper}>
+      <Typography
+        variant="h5"
+        component="h5"
+      >{ props.title }</Typography>
+      <TextField
+        placeholder={ props.placeholder }
+        multiline={true}
+        fullWidth={true}
+        rows={1}
+        rowsMax={8}
+        value={props.value}
+        onChange={event => props.onChange(event.target.value)}
+      />
+    </Paper>
   );
 }
 
