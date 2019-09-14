@@ -33,7 +33,7 @@ function HeaderBar () {
         <IconButton
           color="inherit"
           component={AdapterLink}
-          to="/webhook"
+          to="/setting"
         >
           <Settings />
         </IconButton>

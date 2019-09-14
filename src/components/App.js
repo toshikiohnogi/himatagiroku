@@ -6,7 +6,7 @@ import Container from '@material-ui/core/Container';
 
 import HeaderBar from '../components/headerBar';
 import Form from '../containers/form';
-import Webhook from '../containers/webhook';
+import SettingContainer from '../containers/setting';
 
 const useStyle = makeStyles({
   rootContainer: {
@@ -23,7 +23,7 @@ function App() {
       <Container maxWidth="sm" className={classes.rootContainer}>
         <Switch>
           <Route path='/' component={Form} exact />
-          <Route path='/webhook' component={Webhook} exact />
+          <Route path='/setting' component={SettingContainer} exact />
         </Switch>
       </Container>
     </Router>
