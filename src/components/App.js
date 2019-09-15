@@ -20,7 +20,7 @@ function App() {
   return (
     <Router>
       <HeaderBar />
-      <Container maxWidth="sm" className={classes.rootContainer}>
+      <Container maxWidth="md" className={classes.rootContainer}>
         <Switch>
           <Route path='/' component={Form} exact />
           <Route path='/setting' component={SettingContainer} exact />
