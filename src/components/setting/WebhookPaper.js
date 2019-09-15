@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 
 import Paper from '@material-ui/core/Paper';
@@ -21,9 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
-
-function Webhook () {
+function WebhookPaper () {
   const [url, setUrl] = useState(() => {
     let urlOnLocalStorage = window.localStorage.getItem('webhook');
 
@@ -59,14 +56,12 @@ function Webhook () {
         <Button
           variant="contained"
           color="primary"
-          component={AdapterLink}
-          to="/"
           className={classes.formButton}
           onClick={submitWebhookUrl}
         >登録</Button>
       </Grid>
     </Paper>
-  )
+  );
 }
 
-export default Webhook;
+export default WebhookPaper;
