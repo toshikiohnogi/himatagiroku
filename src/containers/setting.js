@@ -16,8 +16,9 @@ function SettingContainer () {
   return (
     <div>
       <WebhookPaper />
-      <div className={classes.paperMarginTop}></div>
-      <ResetParameterPaper />
+      <div className={classes.paperMarginTop}>
+        <ResetParameterPaper />
+      </div>
     </div>
   );
 }
