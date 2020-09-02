@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid'
@@ -32,8 +33,26 @@ function WebhookPaper () {
   });
 
   const submitWebhookUrl = () => {
-    window.localStorage.setItem('webhook', url);
-    alert('登録しました');
+    try {
+      window.localStorage.setItem('webhook', url);
+    } catch (e) {
+      alert('Failed to access to Local Strage.');
+      return;
+    }
+
+    axios
+      .post(url, {
+        text: 'This webhook url has been set from Himatagiroku.',
+      }, {
+        headers: { 'content-type': 'application/x-www-form-urlencoded' }
+      })
+      .then(() => {
+        alert('登録しました。');
+      })
+      .catch(() => {
+        window.localStorage.removeItem('webhook');
+        alert('登録に失敗しました。');
+      })
   }
 
   const classes = useStyles();
