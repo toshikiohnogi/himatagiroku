@@ -1,8 +1,8 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 
-import WebhookPaper from '../components/setting/WebhookPaper';
-import ResetParameterPaper from '../components/setting/ResetParameterPaper';
+import WebhookPaper from './WebhookPaper';
+import ResetParameterPaper from './ResetParameterPaper';
 
 const useStyles = makeStyles(() => ({
   paperMarginTop: {

@@ -4,9 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Container from '@material-ui/core/Container';
 
-import HeaderBar from '../components/headerBar';
-import Form from '../containers/form';
-import SettingContainer from '../containers/setting';
+import HeaderBar from '../Components/HeaderBar';
+import Form from '../Components/Form/Container';
+import SettingContainer from '../Components/Setting/Container';
 
 const useStyle = makeStyles({
   rootContainer: {

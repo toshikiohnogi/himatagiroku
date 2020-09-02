@@ -5,7 +5,7 @@ import axios from 'axios'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button';
 
-import InputCard from '../components/form/InputCard'
+import InputCard from './InputCard';
 
 const useStyles = makeStyles({
   mt20: {
